@@ -53,10 +53,11 @@ def get_notes_intervals(midi_data,with_vel=False):
 
     for instr in midi_data.instruments:
         for note in instr.notes:
-            notes += [note.pitch]
-            intervals += [[note.start,note.end]]
-            if with_vel:
-                vels += [note.velocity]
+            if note.end - note.start > 0:
+               notes += [note.pitch]
+               intervals += [[note.start,note.end]]
+               if with_vel:
+                   vels += [note.velocity]
     output = [np.array(notes), np.array(intervals)]
     if with_vel:
         output += [np.array(vels)]
