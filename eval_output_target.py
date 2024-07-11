@@ -1,7 +1,7 @@
 from peamt import PEAMT
 from pathlib import Path
 import sys
-
+import datetime
 
 def main(
     output_filename: Path = Path("output.mid"),
@@ -20,5 +20,11 @@ if __name__ == "__main__":
     else:
         output_filename: Path = Path(sys.argv[1])
         target_filename: Path = Path(sys.argv[2])
-        result = main(output_filename, target_filename)
-        print(result)
+        try:
+            result = main(output_filename, target_filename)
+        except ValueError:
+            result = 0.0
+        with open(f"/app/data/result_{datetime.datetime.now()}.txt", "wt") as myfile:
+           myfile.write(f"{result:1.04f}\n")
+           myfile.close()
+        print(f"{result:1.04f}")
